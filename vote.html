@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Poll Voting App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .poll-container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .results {
+      margin-top: 20px;
+    }
+
+    .results p {
+      margin: 5px 0;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="poll-container">
+    <h2>Which is your favorite programming language?</h2>
+    
+    <form id="poll-form">
+      <label>
+        <input type="radio" name="vote" value="JavaScript"> JavaScript
+      </label><br>
+      <label>
+        <input type="radio" name="vote" value="Python"> Python
+      </label><br>
+      <label>
+        <input type="radio" name="vote" value="Java"> Java
+      </label><br>
+      <label>
+        <input type="radio" name="vote" value="C++"> C++
+      </label><br>
+      <button type="button" id="submitVote">Submit Vote</button>
+    </form>
+    
+    <div id="results" class="results"></div>
+  </div>
+
+  <script>
+    document.getElementById('submitVote').addEventListener('click', function () {
+      const options = document.getElementsByName('vote');
+      let selectedOption = '';
+      
+      for (const option of options) {
+        if (option.checked) {
+          selectedOption = option.value;
+          break;
+        }
+      }
+      
+      if (selectedOption) {
+        updateResults(selectedOption);
+      } else {
+        alert('Please select an option!');
+      }
+    });
+
+    const votes = {
+      'JavaScript': 0,
+      'Python': 0,
+      'Java': 0,
+      'C++': 0
+    };
+
+    function updateResults(selectedOption) {
+      votes[selectedOption]++;
+      displayResults();
+    }
+
+    function displayResults() {
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = '<h3>Poll Results:</h3>';
+      
+      for (const [language, count] of Object.entries(votes)) {
+        resultsDiv.innerHTML += `<p>${language}: ${count} votes</p>`;
+      }
+    }
+  </script>
+</body>
+</html>
